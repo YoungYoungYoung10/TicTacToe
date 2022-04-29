@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@100&family=Water+Brush&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+</head>
+<style>
+      * {
+    margin: 0;
+    padding: 0;
+  }
+/* .main{
+    width: 1920px;
+    height: 1000px;
+    background: grey;
+} */
+
+
+
+h1{
+    width: 623px;
+    height: 60px;
+    margin: auto;
+    color: #FFA446;
+    margin-top: 150px;
+    font-family: 'Bangers', cursive;
+    letter-spacing: 5px;
+    font-size: 66px;
+}
+
+.container {
+  background: #001D81;
+    width: 1920px;
+    height: 1000px;
+  display: inline-block;
+  /* border: 5px solid black; */
+  margin: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  grid-gap: 5px;
+  width: 315px;
+  height: 315px;
+  margin: 0 auto;
+  margin-top: 5%;
+  
+}
+
+.cell {
+   /* center the cell content */
+  justify-content: center;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  font-size: 3rem;
+  font-weight: bold;
+  background: #FFA446;
+  cursor: pointer;
+}
+.cross{
+    width: 50%;
+}
+
+.circle{
+    width: 50%;
+}
+</style>
+<body>
+
+        <div class="container">
+            <h1>Let's play TicTacToe!!!</h1>
+            <div class="grid">
+                <div class="cell" id="0"><img src="./img/Circle.png" alt="" class="cross"></div>
+                <div class="cell" id="1"><img src="./img/Cross.png" alt="" class="cross"></div>
+                <div class="cell" id="2"><img src="./img/Circle.png" alt="" class="cross"></div>
+                <div class="cell" id="3"><img src="./img/Cross.png" alt="" class="cross"></div>
+                <div class="cell" id="4"><img src="./img/Circle.png" alt="" class="cross"></div>
+                <div class="cell" id="5"><img src="./img/Cross.png" alt="" class="cross"></div>
+                <div class="cell" id="6"><img src="./img/Circle.png" alt="" class="cross"></div>
+                <div class="cell" id="7"><img src="./img/Cross.png" alt="" class="cross"></div>
+                <div class="cell" id="8"><img src="./img/Circle.png" alt="" class="cross"></div>
+            </div>
+        </div>
+        <script src="game.js"></script>
+        <script>
+            game = new Game();
+            game.reset();
+            for(let i = 0; i < 9; i++) {
+                document.getElementById(i).addEventListener("click", function() {
+                    game.update_board(i);
+                    game.display_board();
+                    
+                    if (game.get_winner() != null) {
+                        setTimeout(function() {
+                            if (game.get_winner() == 'T') {
+                              alert("Tie!");
+                            }
+                            else{
+                              alert("Winner is "+ game.get_winner());
+                            }
+                            game.reset();
+                            game.display_board();
+                        },10);
+                        
+                    }
+                });
+            }
+    
+        </script>
+
+</body>
+</html>
