@@ -2,8 +2,8 @@
 Tic-Tac-Toe Game Calss
 Author: bbrianh
 */
-CROSS = "<img src='./img/Cross.png' class='cross'>"
-CRICLE = "<img src='./img/Circle.png' class='cross'>"
+var CROSS = "<img src='./img/Cross.png' class='cross'>"
+var CRICLE = "<img src='./img/Circle.png' class='cross'>"
 
 class Game {
     constructor() {

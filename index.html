@@ -12,67 +12,103 @@
     margin: 0;
     padding: 0;
   }
-/* .main{
-    width: 1920px;
-    height: 1000px;
-    background: grey;
-} */
+
+  body{
+    background-color: #001D81;
+  }
 
 
+  h1{
+      width: 623px;
+      height: 60px;
+      margin: auto;
+      color: #FFA446;
+      margin-top: 150px;
+      font-family: 'Bangers', cursive;
+      letter-spacing: 5px;
+      font-size: 66px;
+  }
 
-h1{
-    width: 623px;
-    height: 60px;
+  .container {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    /* border: 5px solid black; */
     margin: auto;
-    color: #FFA446;
-    margin-top: 150px;
-    font-family: 'Bangers', cursive;
-    letter-spacing: 5px;
-    font-size: 66px;
-}
+  }
 
-.container {
-  background: #001D81;
-    width: 1920px;
-    height: 1000px;
-  display: inline-block;
-  /* border: 5px solid black; */
-  margin: auto;
-}
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    grid-gap: 5px;
+    width: 315px;
+    height: 315px;
+    margin: 0 auto;
+    margin-top: 5%;
+    
+  }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  grid-gap: 5px;
-  width: 315px;
-  height: 315px;
-  margin: 0 auto;
-  margin-top: 5%;
-  
-}
+  .cell {
+    /* center the cell content */
+    justify-content: center;
+    border-radius: 50%;
+    align-items: center;
+    display: flex;
+    font-size: 3rem;
+    font-weight: bold;
+    background: #FFA446;
+    cursor: pointer;
+  }
+  .cross{
+      width: 50%;
+  }
 
-.cell {
-   /* center the cell content */
-  justify-content: center;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  font-size: 3rem;
-  font-weight: bold;
-  background: #FFA446;
-  cursor: pointer;
-}
-.cross{
-    width: 50%;
-}
+  .circle{
+      width: 50%;
+  }
 
-.circle{
-    width: 50%;
-}
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  /* The Close Button */
+  #close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  #close:hover,
+  #close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
 <body>
-
+        <!-- Board -->
         <div class="container">
             <h1>Let's play TicTacToe!!!</h1>
             <div class="grid">
@@ -87,6 +123,18 @@ h1{
                 <div class="cell" id="8"><img src="./img/Circle.png" alt="" class="cross"></div>
             </div>
         </div>
+
+        <!-- Modal Box -->
+        <div id="WinnerBox" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span id="close">&times;</span>
+            <p id="winner"></p>
+          </div>
+
+        </div>
+
         <script src="game.js"></script>
         <script>
             game = new Game();
@@ -97,21 +145,23 @@ h1{
                     game.display_board();
                     
                     if (game.get_winner() != null) {
-                        setTimeout(function() {
-                            if (game.get_winner() == 'T') {
-                              alert("Tie!");
-                            }
-                            else{
-                              alert("Winner is "+ game.get_winner());
-                            }
-                            game.reset();
-                            game.display_board();
-                        },10);
-                        
+                      if (game.get_winner() == 'T') {
+                        document.getElementById("winner").innerHTML = "Tie!";
+                      }
+                      else{
+                        document.getElementById("winner").innerHTML = "Winner is "+ game.get_winner();
+                      }
+                      document.getElementById("WinnerBox").style.display = "block";
                     }
                 });
             }
-    
+            
+            var close_btn = document.getElementById("close");
+            close_btn.onclick = function() {
+              document.getElementById("WinnerBox").style.display = "none";
+              game.reset();
+              game.display_board();
+            }
         </script>
 
 </body>
