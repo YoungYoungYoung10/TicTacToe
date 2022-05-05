@@ -21,12 +21,79 @@
   h1{
       width: 623px;
       height: 60px;
+      /* border-radius: 5px; */
       margin: auto;
       color: #FFA446;
-      margin-top: 150px;
+      margin-top: 8%;
       font-family: 'Bangers', cursive;
       letter-spacing: 5px;
       font-size: 66px;
+      text-align: center;
+      /* background-color: #FFA446; */
+      /* box-shadow: 0 0 20px rgb(255, 255, 255); */
+  }
+  .bottom{
+      width: 623px;
+      height: 60px;
+      margin: auto;
+      /* justify-content: space-around; */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4.8%;
+  }
+  .btn{
+    padding: 5px 15px;
+    display: inline;
+    margin: auto;
+    color: #FDE9CE;
+    font-family: 'Bangers', cursive;
+    text-align: center;
+    font-size: 40px;
+    border-radius: 25px;
+    background-color: #FFA446;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+  }
+  .btn:hover {
+    transform: scale(1.2);
+    transition: 0.5s ease;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.277);
+}
+
+  .round{
+    width: 300px;
+    height: 63px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px;
+    display: inline;
+    margin: auto;
+    border: thick ;
+    color: #FFA446;;
+    font-family: 'Bangers', cursive;
+    /* text-align: center; */
+    font-size: 40px;
+    /* border-radius: 25px; */
+    /* outline-offset: 100px; */
+    /* background-color: #FFA446; */
+        align-items: center;
+        position: relative;
+
+  }
+  .round p{
+    display: inline;
+    align-items: center;
+position: absolute;
+top: 13%;
+  }
+  .round img{
+    display: inline;
+    align-items: center;
+    position: absolute;
+    left: 64%;
   }
 
   .container {
@@ -46,6 +113,7 @@
     height: 315px;
     margin: 0 auto;
     margin-top: 5%;
+    /* display:none */
     
   }
 
@@ -60,6 +128,11 @@
     background: #FFA446;
     cursor: pointer;
   }
+  .cell:hover {
+    transform: scale(1.1);
+    transition: 0.5s ease;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.277);
+}
   .cross{
       width: 50%;
   }
@@ -68,49 +141,11 @@
       width: 50%;
   }
 
-  /* The Modal (background) */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-
-  /* Modal Content */
-  .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
-
-  /* The Close Button */
-  #close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  #close:hover,
-  #close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
 </style>
 <body>
         <!-- Board -->
         <div class="container">
-            <h1>Let's play TicTacToe!!!</h1>
+            <h1 id="title">Let's play TicTacToe!!!</h1>
             <div class="grid">
                 <div class="cell" id="0"><img src="./img/Circle.png" alt="" class="cross"></div>
                 <div class="cell" id="1"><img src="./img/Cross.png" alt="" class="cross"></div>
@@ -122,45 +157,58 @@
                 <div class="cell" id="7"><img src="./img/Cross.png" alt="" class="cross"></div>
                 <div class="cell" id="8"><img src="./img/Circle.png" alt="" class="cross"></div>
             </div>
-        </div>
-
-        <!-- Modal Box -->
-        <div id="WinnerBox" class="modal">
-
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span id="close">&times;</span>
-            <p id="winner"></p>
-          </div>
-
+            <div class="bottom">
+              <div class="round" id="round">
+                <p>Now Playing: </p>
+                <img id="turn" src="./img/Circle.png" alt="">
+              </div>
+              <button class="btn" id="btn">Restart</button>
+            </div>
         </div>
 
         <script src="game.js"></script>
         <script>
             game = new Game();
             game.reset();
+
+            var round = document.getElementById("turn");
+            round.src = "./img/Circle.png";
+
+            var title = document.querySelector('#title');
+
             for(let i = 0; i < 9; i++) {
-                document.getElementById(i).addEventListener("click", function() {
-                    game.update_board(i);
-                    game.display_board();
+                document.getElementById(i).addEventListener("click", function update_game() {
+                    if (game.get_winner() == null) {
+                      game.update_board(i);
+                      game.display_board();
+                      if (game.turn == "O") {
+                        round.src = "./img/Circle.png"
+                      } else {
+                        round.src = "./img/Cross.png"
+                      }
+                    }
                     
                     if (game.get_winner() != null) {
                       if (game.get_winner() == 'T') {
-                        document.getElementById("winner").innerHTML = "Tie!";
+                        title.innerHTML = "Tie!";
                       }
                       else{
-                        document.getElementById("winner").innerHTML = "Winner is "+ game.get_winner();
+                        title.innerHTML = "Winner is "+ game.get_winner();
                       }
-                      document.getElementById("WinnerBox").style.display = "block";
                     }
                 });
             }
-            
-            var close_btn = document.getElementById("close");
-            close_btn.onclick = function() {
-              document.getElementById("WinnerBox").style.display = "none";
+
+            // restart button onclick
+            document.getElementById("btn").onclick = function() {
+              // change board
               game.reset();
               game.display_board();
+              //change title
+              title.innerHTML = "Let's play TicTacToe!!!";
+              // change round
+              round.src = "./img/Circle.png";
+
             }
         </script>
 
